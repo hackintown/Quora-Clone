@@ -5,9 +5,14 @@ const Slidebar = () => {
   return (
     <div>
       <ul>
-        <li>
+      <li>
           <Link href="/category/cooking">
             <a>Cooking</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/category/sports">
+            <a>Sport</a>
           </Link>
         </li>
         <li>
