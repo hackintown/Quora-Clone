@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header/Header";
 import Home from "./page";
+import Slidebar from "@/components/Slidebar/Slidebar";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "700"],
@@ -23,9 +24,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={poppins.className}>
-      <body>
+      <body className="bg-gray-100">
         <Header />
-        <Home/>
+        <div className="flex max-w-[1100px] mx-auto px-2 py-4">
+          <Slidebar />
+          {children}
+          <div className="w-[350px]"></div>
+        </div>
       </body>
     </html>
   );
