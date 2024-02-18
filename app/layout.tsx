@@ -29,7 +29,7 @@ export default function RootLayout({
         <div className="flex max-w-[1100px] mx-auto px-2 py-4">
           <Slidebar />
           {children}
-          <div className="w-[350px]"></div>
+          <div className="w-full"></div>
         </div>
       </body>
     </html>

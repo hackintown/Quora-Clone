@@ -19,9 +19,10 @@ body {
   color: var(--primary-color);
   background-color: var(--primary-bg-color);
 }
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+input:focus, input, button{
+  outline: none;
+}
+img{
+  max-width: 100%;
+  display: block;
 }

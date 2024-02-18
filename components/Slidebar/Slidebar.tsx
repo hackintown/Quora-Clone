@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { GoPlus } from "react-icons/go";
+import FooterLinks from "../Footer/Links";
 
 const Slidebar = () => {
   const items = [
@@ -42,32 +43,33 @@ const Slidebar = () => {
     },
   ];
   return (
-    <div className="max-w-[150px] w-[100%] p-1 border-b-2  border-gray-200">
-      <div className="border-b border-gray-300 h-max">
-        <ul>
-          {items.map((item, idx) => (
-            <li
-              key={idx}
-              className={`flex items-center hover:bg-gray-200 pl-2 pr-3 py-2 mb-2 rounded text-sm ${
-                item.isActive ? "bg-gray-200" : ""
-              }`}
-            >
-              {item.iconPlus && <GoPlus className="mr-2" />}
-              {item.imgSrc && (
-                <img
-                  src={item.imgSrc}
-                  className="w-[18px] h-[18px] mr-2 rounded-sm"
-                />
-              )}
-              {item.label}
-            </li>
-          ))}
-        </ul>
+    <>
+      <div className="max-w-[150px] w-[100%]"></div>
+      <div className="fixed top-16 h-full max-w-[150px] w-[100%] p-1 border-b-2  border-gray-200">
+        <div className="border-b border-gray-300 h-max">
+          <ul>
+            {items.map((item, idx) => (
+              <li
+                key={idx}
+                className={`flex items-center hover:bg-gray-200 pl-2 pr-3 py-2 mb-2 rounded text-sm ${
+                  item.isActive ? "bg-gray-200" : ""
+                }`}
+              >
+                {item.iconPlus && <GoPlus className="mr-2" />}
+                {item.imgSrc && (
+                  <img
+                    src={item.imgSrc}
+                    className="w-[18px] h-[18px] mr-2 rounded-sm"
+                  />
+                )}
+                {item.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <FooterLinks />
       </div>
-      <div className="">
-
-      </div>
-    </div>
+    </>
   );
 };
 

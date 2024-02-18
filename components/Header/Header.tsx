@@ -8,7 +8,8 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 const Header = () => {
   return (
     <div>
-      <header className="px-4 bg-white shadow-md py-1">
+      <div className="h-[50px] relative"></div>
+      <header className="px-4 bg-white shadow-md py-1 fixed top-0 w-full min-h-[50px]">
         <div className="max-w-[1100px] mx-auto">
           <div className="flex items-center">
             <nav>

@@ -2,7 +2,7 @@ import React from "react";
 
 const BlogContent = () => {
   return (
-    <section className="w-[100%] px-3 py-3 mx-4 bg-white shadow-slate-200 shadow-sm border rounded text-sm">
+    <section className="w-[100%] p-4 my-2 bg-white shadow-[rgba(0,0,0,0.04)] shadow-sm border rounded text-sm">
       Contrary to popular belief, Lorem Ipsum is not simply random text. It has
       roots in a piece of classical Latin literature from 45 BC, making it over
       2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney
