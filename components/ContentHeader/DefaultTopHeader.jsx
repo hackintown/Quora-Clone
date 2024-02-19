@@ -9,7 +9,7 @@ const DefaultTopHeader = () => {
   return (
     <div className="px-2 pt-3 pb-2 mb-2 bg-white shadow-[rgba(0,0,0,0.04)] shadow-sm border rounded">
       <div className="flex items-center ">
-        <div className="mx-2 rounded-full">
+        <div className="mr-2 ml-1 rounded-full">
           <Image
             src="https://pxbar.com/wp-content/uploads/2023/08/insta-dp-for-girls.jpg"
             height={40}

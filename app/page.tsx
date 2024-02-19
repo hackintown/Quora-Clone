@@ -6,7 +6,7 @@ import DefaultTopHeader from "@/components/ContentHeader/DefaultTopHeader";
 
 export default function Home() {
   return (
-    <div className="max-w-[600px] px-3 py-1 mx-2">
+    <div className="max-w-[600px] w-full px-3 py-1 mx-2">
       <DefaultTopHeader />
       <BlogContent />
       <BlogContent />
