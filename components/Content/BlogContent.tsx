@@ -7,8 +7,20 @@ import { PiArrowFatUpBold, PiArrowFatUpLight } from "react-icons/pi";
 import { PiArrowFatDownBold } from "react-icons/pi";
 import { FaRegComment } from "react-icons/fa6";
 import { GrPowerCycle } from "react-icons/gr";
+import { useState } from "react";
 
 const BlogContent = () => {
+  const [upArrow, setUpArrow] = useState(false);
+  const [downArrow, setDownArrow] = useState(false);
+  const handleUpArrow = () => {
+    setUpArrow(!upArrow);
+    setDownArrow(false);
+
+  };
+  const handleDownArrow = () => {
+    setDownArrow(!downArrow);
+    setUpArrow(false)
+  };
   return (
     <section className="w-[100%] my-2 bg-white shadow-[rgba(0,0,0,0.04)] shadow-sm border rounded text-sm">
       <div className="flex items-center pl-3">
@@ -56,15 +68,28 @@ const BlogContent = () => {
       <div className="flex my-1 mx-3 items-center">
         <div className="flex items-center bg-[rgba(0,0,1,0.03)] rounded-full border border-[#dee0e1] h-[30px]">
           <button className="flex items-center border-r px-2 pl-3 border-solid border-[#dee0e1] h-full">
-            <span className="mr-1 inline-block">
-              <PiArrowFatUpBold className="text-lg" style={{color: "rgb(46, 105, 255)"}}/>
+            <span className="mr-1 inline-block" onClick={handleUpArrow}>
+              <PiArrowFatUpBold
+                className={`${upArrow ? "skew" : ""} text-lg`}
+                style={{
+                  color: "rgb(46, 105, 255)",
+                  transition:
+                    "transform 0ms cubic-bezier(0.23, 0.19, 0.1, 1.34) 0ms",
+                }}
+              />
             </span>
-            <span className="inline-block px-1 text-[#636466]">Upvote</span>
-            <span className="inline-block pl-1 text-[#636466]">14K</span>
+            <span className={`inline-block px-1 text-[#636466] ${upArrow ? 'voted' : ''}`}>Upvote</span>
+            <span className={`{inline-block pl-1 text-[#636466] ${upArrow ? 'voted' : ''}`}>15</span>
           </button>
           <div className="flex items-center">
-            <button className="px-2 pr-3">
-              <PiArrowFatDownBold className="text-lg" />
+            <button className="px-2 pr-3" onClick={handleDownArrow}>
+              <PiArrowFatDownBold
+                className={`${downArrow ? "skew" : ""} text-lg`}
+                style={{
+                  transition:
+                    "transform 0ms cubic-bezier(0.23, 0.19, 0.1, 1.34) 0ms",
+                }}
+              />
             </button>
           </div>
         </div>
@@ -76,7 +101,7 @@ const BlogContent = () => {
         </div>
         <div className=" hover:bg-[rgba(0,0,1,0.03)] rounded-full px-2 py-1">
           <button className="flex items-center">
-          <GrPowerCycle />
+            <GrPowerCycle />
             <span className="inline-block pl-2">9</span>
           </button>
         </div>

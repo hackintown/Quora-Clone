@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header/Header";
 import Home from "./page";
 import Slidebar from "@/components/Slidebar/Slidebar";
+import ReduxProvider from "@/components/ReduxProvider/Provider";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "700"],
@@ -25,12 +26,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.className}>
       <body className="bg-gray-100">
-        <Header />
-        <div className="flex max-w-[1100px] mx-auto px-2 py-4">
-          <Slidebar />
-          {children}
-          <div className=""></div>
-        </div>
+        <ReduxProvider>
+          <Header />
+          <div className="flex max-w-[1100px] mx-auto px-2 py-4">
+            <Slidebar />
+            {children}
+            <div className=""></div>
+          </div>
+        </ReduxProvider>
       </body>
     </html>
   );
