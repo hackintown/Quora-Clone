@@ -5,6 +5,7 @@ import { FaListAlt } from "react-icons/fa";
 import { BiSolidEdit } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import Image from "next/image";
 const Header = () => {
   return (
     <div>
@@ -77,6 +78,16 @@ const Header = () => {
                   <button className="px-4 py-2 bg-white rounded-3xl text-black border border-gray-400 text-xs">
                     Try Hackintoiwn +
                   </button>
+                </li>
+                <li>
+                  <div className="mr-2 ml-1 rounded-full">
+                    <Image
+                      src="https://pxbar.com/wp-content/uploads/2023/08/insta-dp-for-girls.jpg"
+                      height={30}
+                      width={30}
+                      alt="avatar"
+                    />
+                  </div>
                 </li>
               </ul>
             </nav>

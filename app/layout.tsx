@@ -1,3 +1,5 @@
+// RootLayout.tsx
+
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
@@ -5,6 +7,8 @@ import Header from "@/components/Header/Header";
 import Home from "./page";
 import Slidebar from "@/components/Slidebar/Slidebar";
 import ReduxProvider from "@/components/ReduxProvider/Provider";
+import UserLogin from "@/components/Auth/UserLogin";
+import RootLayoutClient from "@/layouts/RootLayout";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "700"],
@@ -19,20 +23,28 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+  user,
   children,
-}: Readonly<{
+}: {
+  user: any; 
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" className={poppins.className}>
       <body className="bg-gray-100">
         <ReduxProvider>
-          <Header />
-          <div className="flex max-w-[1100px] mx-auto px-2 py-4">
-            <Slidebar />
-            {children}
-            <div className=""></div>
-          </div>
+          {user ? (
+            <>
+              <Header />
+              <div className="flex max-w-[1100px] mx-auto px-2 py-4">
+                <Slidebar />
+                {children}
+                <div className=""></div>
+              </div>
+            </>
+          ) : (
+            <UserLogin />
+          )}
         </ReduxProvider>
       </body>
     </html>
