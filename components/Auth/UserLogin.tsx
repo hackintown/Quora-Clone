@@ -1,13 +1,21 @@
-"use Client"
+"use client";
 import React from "react";
 import styles from "./UserLogin.module.css";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { useState } from "react";
+import { auth, provider } from "@/app/firebase";
 
 const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const handleLogin = () => {
+    firebase.auth().onAuthStateChanged(function(user){
+
+   })
+  };
+  const handleRegister = () => {};
+  const googleSignUp = () => {};
   return (
     <form className={styles.form}>
       <div className={styles["flex-column"]}>
@@ -15,7 +23,7 @@ const UserLogin = () => {
       </div>
       <div className={styles.inputForm}>
         <svg
-          height="20" 
+          height="20"
           viewBox="0 0 32 32"
           width="20"
           xmlns="http://www.w3.org/2000/svg"
@@ -29,6 +37,7 @@ const UserLogin = () => {
           value={email}
           className={styles.input}
           placeholder="Enter your Email"
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
 
@@ -50,6 +59,7 @@ const UserLogin = () => {
           value={password}
           className={styles.input}
           placeholder="Enter your Password"
+          onChange={(e) => setPassword(e.target.value)}
         />
         <svg
           viewBox="0 0 576 512"
@@ -74,15 +84,27 @@ const UserLogin = () => {
         <span className={styles.span}>Forgot password?</span>
       </div>
 
-      <button className={styles["button-submit"]}>Sign In</button>
+      <button
+        type="submit"
+        className={styles["button-submit"]}
+        onClick={handleLogin}
+      >
+        Login
+      </button>
 
       <p className={styles.p}>
-        Don't have an account? <span className={styles.span}>Sign Up</span>
+        Don't have an account?{" "}
+        <span className={styles.span} onClick={handleRegister}>
+          Register
+        </span>
       </p>
       <p className={`${styles.p} ${styles.line}`}>Or With</p>
 
       <div className={styles["flex-row"]}>
-        <button className={`${styles.btn} ${styles.google}`}>
+        <button
+          className={`${styles.btn} ${styles.google}`}
+          onClick={googleSignUp}
+        >
           <FaGoogle />
           Google
         </button>
