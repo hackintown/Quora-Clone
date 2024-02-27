@@ -4,18 +4,45 @@ import styles from "./UserLogin.module.css";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { useState } from "react";
-import { auth, provider } from "@/app/firebase";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { provider } from "@/app/firebase";
 
 const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = () => {
-    firebase.auth().onAuthStateChanged(function(user){
-
-   })
-  };
+  const handleLogin = () => {};
   const handleRegister = () => {};
-  const googleSignUp = () => {};
+  const googleSignUp = () => {
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        let token: string | null = null; // Initialize token as null
+
+        if (credential && credential.accessToken) {
+          token = credential.accessToken;
+        } else {
+          // Handle the case where credential.accessToken is null or undefined
+        }
+
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  };
+
   return (
     <form className={styles.form}>
       <div className={styles["flex-column"]}>
