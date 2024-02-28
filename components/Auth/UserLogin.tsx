@@ -4,45 +4,53 @@ import styles from "./UserLogin.module.css";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { useState } from "react";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { provider } from "@/app/firebase";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import { error } from "console";
+import { db, auth } from "@/app/firebase";
+import { useDispatch } from "react-redux";
+import { useRouter } from 'next/navigation'
+import { loginSuccess } from "@/features/userAuthSlice";
 
 const UserLogin = () => {
+  const router = useRouter()
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = () => {};
-  const handleRegister = () => {};
-  const googleSignUp = () => {
-    const auth = getAuth();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        let token: string | null = null; // Initialize token as null
-
-        if (credential && credential.accessToken) {
-          token = credential.accessToken;
-        } else {
-          // Handle the case where credential.accessToken is null or undefined
-        }
-
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
+  const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        const { providerId, uid, email } = user;
+        const serializablePayload = { providerId, uid, email };
+        dispatch(loginSuccess(serializablePayload));
+        console.log("hi");
+        router.push("/");
       })
       .catch((error) => {
-        // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
       });
   };
-
+  const googleSignUp = () => {
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        const user = result.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  };
   return (
     <form className={styles.form}>
       <div className={styles["flex-column"]}>
@@ -120,10 +128,7 @@ const UserLogin = () => {
       </button>
 
       <p className={styles.p}>
-        Don't have an account?{" "}
-        <span className={styles.span} onClick={handleRegister}>
-          Register
-        </span>
+        Don't have an account? <span className={styles.span}>Register</span>
       </p>
       <p className={`${styles.p} ${styles.line}`}>Or With</p>
 

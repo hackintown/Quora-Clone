@@ -8,7 +8,7 @@ import Home from "./page";
 import Slidebar from "@/components/Slidebar/Slidebar";
 import ReduxProvider from "@/components/ReduxProvider/Provider";
 import UserLogin from "@/components/Auth/UserLogin";
-import RootLayoutClient from "@/layouts/RootLayout";
+import RootLayoutClient from "@/layouts/RootLayoutClient";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "700"],

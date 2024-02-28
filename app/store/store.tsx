@@ -1,10 +1,11 @@
 import { setVoteCounter } from "@/features/voteCountSlice";
 import { configureStore } from "@reduxjs/toolkit";
-import userAuth from "@/features/userAuthSlice";
+import userAuthSlice from "@/features/userAuthSlice";
+export type RootState = ReturnType<typeof store.getState>;
 const store = configureStore({
   reducer: {
     voteCounter: setVoteCounter,
-    user: userAuth,
+    userAuth: userAuthSlice,
   },
 });
 export default store;
