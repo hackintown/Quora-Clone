@@ -6,6 +6,7 @@ import { BiSolidEdit } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import Image from "next/image";
+import { HOME_ROUTE } from "@/constants/routes";
 const Header = () => {
   return (
     <div>
@@ -17,7 +18,7 @@ const Header = () => {
               <ul className="flex items-center">
                 <li className="mx-4">
                   <div className="logo">
-                    <Link href="/" className="text-lg font-bold text-black">
+                    <Link href={HOME_ROUTE} className="text-lg font-bold text-black">
                       Hackintown
                     </Link>
                   </div>

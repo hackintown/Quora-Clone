@@ -1,3 +1,4 @@
+"use client";
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store/store";
 const userAuthSlice = createSlice({

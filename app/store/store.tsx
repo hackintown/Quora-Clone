@@ -1,3 +1,4 @@
+"use client";
 import { setVoteCounter } from "@/features/voteCountSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import userAuthSlice from "@/features/userAuthSlice";

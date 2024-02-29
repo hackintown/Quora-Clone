@@ -13,11 +13,11 @@ import {
 import { error } from "console";
 import { db, auth } from "@/app/firebase";
 import { useDispatch } from "react-redux";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { loginSuccess } from "@/features/userAuthSlice";
 
 const UserLogin = () => {
-  const router = useRouter()
+  const router = useRouter();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,8 +29,8 @@ const UserLogin = () => {
         const { providerId, uid, email } = user;
         const serializablePayload = { providerId, uid, email };
         dispatch(loginSuccess(serializablePayload));
-        console.log("hi");
         router.push("/");
+        console.log("hi");
       })
       .catch((error) => {
         const errorCode = error.code;
