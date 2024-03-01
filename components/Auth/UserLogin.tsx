@@ -4,52 +4,20 @@ import styles from "./UserLogin.module.css";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { useState } from "react";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
-import { error } from "console";
-import { db, auth } from "@/app/firebase";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
-import { loginSuccess } from "@/features/userAuthSlice";
-
-const UserLogin = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
+import { useDispatch, useSelector } from "react-redux";
+import userAuthSlice, {setLoginSuccess, setLoginFailure, setLogout} from "@/features/userAuthSlice";
+import { ReducerState } from "next/dist/client/components/router-reducer/router-reducer-types";
+const UserLogin:React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+ const dispatch = useDispatch();
+ const loginSuccess = useSelector((state) => state.userAuth.isLoggedIn);
+
+  const handleLogin = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        const { providerId, uid, email } = user;
-        const serializablePayload = { providerId, uid, email };
-        dispatch(loginSuccess(serializablePayload));
-        router.push("/");
-        console.log("hi");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
-  };
-  const googleSignUp = () => {
-    const auth = getAuth();
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-        const user = result.user;
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
+    if(email && password){
+      
+    }
   };
   return (
     <form className={styles.form}>

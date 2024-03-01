@@ -1,35 +1,41 @@
-"use client";
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "@/app/store/store";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+interface AuthState {
+  isLoggedIn: boolean;
+  user: User | null;
+  error: string | null;
+}
+// Define types for user
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+const initialState: AuthState = {
+  isLoggedIn: false,
+  user: null,
+  error: null,
+};
 const userAuthSlice = createSlice({
   name: "userAuth",
-  initialState: {
-    user: null,
-    isAuthenticated: false,
-    loading: true, // Added loading state
-  },
+  initialState,
   reducers: {
-    loginSuccess: (state, action) => {
-      state.user = action.payload;
-      state.isAuthenticated = true;
-      state.loading = false;
-    },
-    logoutSuccess: (state) => {
+    setLoginSuccess: (state, action: PayloadAction<boolean>) => {
+      state.isLoggedIn = action.payload;
       state.user = null;
-      state.isAuthenticated = false;
-      state.loading = false;
+      state.error = null;
     },
-    setLoading: (state, action) => {
-      state.loading = action.payload;
+    setLoginFailure: (state, action) => {
+      state.isLoggedIn = false;
+      state.user = null;
+      state.error = action.payload;
+    },
+    setLogout: (state) => {
+      state.isLoggedIn = false;
+      state.user = null;
+      state.error = null;
     },
   },
 });
-
-export const { loginSuccess, logoutSuccess, setLoading } =
+export const { setLoginSuccess, setLoginFailure, setLogout } =
   userAuthSlice.actions;
-// Selectors
-export const selectUser = (state: RootState) => state.userAuth.user;
-export const selectIsAuthenticated = (state: RootState) =>
-  state.userAuth.isAuthenticated;
-export const selectLoading = (state: RootState) => state.userAuth.loading;
 export default userAuthSlice.reducer;

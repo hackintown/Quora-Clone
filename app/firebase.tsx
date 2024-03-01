@@ -1,17 +1,18 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { GoogleAuthProvider } from "firebase/auth";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAl42Ao8BeanqDrGCBx8Teoa4d1wjELd8c",
-  authDomain: "quora-new.firebaseapp.com",
-  projectId: "quora-new",
-  storageBucket: "quora-new.appspot.com",
-  messagingSenderId: "715628675206",
-  appId: "1:715628675206:web:9d5402c8ac86585c0bd107",
-  measurementId: "G-LJR30FXKQC",
+  apiKey: "AIzaSyDMnqDWWmQy28v43nMukFkpZh64zOYeFH8",
+  authDomain: "hackintown-auth.firebaseapp.com",
+  projectId: "hackintown-auth",
+  storageBucket: "hackintown-auth.appspot.com",
+  messagingSenderId: "966695200508",
+  appId: "1:966695200508:web:1eef4ac7807c2c5c47d979",
+  measurementId: "G-R44PWJW5CQ",
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-export { app, auth, db };
+// Initialize Firebase
+export const auth = getAuth(app);
+export const app = initializeApp(firebaseConfig);
+export const provider = new GoogleAuthProvider();
