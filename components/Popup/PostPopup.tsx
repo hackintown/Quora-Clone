@@ -1,9 +1,16 @@
-import React from "react";
+import { addDoc, collection } from "firebase/firestore";
+import { storage } from "@/app/firebase";
+import React, { useState } from "react";
 
 type postType = {
   setPost: any;
 };
 const PostPopup = (props: postType) => {
+    const questionRef = collection(storage, 'questions')
+    const [quest, setQuest] = useState('' )
+    const addQuestion = () =>{
+        addDoc(questionRef)
+    }
   return (
     <div
       className="relative z-10"
@@ -32,7 +39,7 @@ const PostPopup = (props: postType) => {
                 />
                 <button
                   type="button"
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                  className="ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                 >
                   Add question
                 </button>
