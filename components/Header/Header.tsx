@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { IoMdHome } from "react-icons/io";
 import { FaListAlt } from "react-icons/fa";
@@ -6,8 +6,11 @@ import { BiSolidEdit } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import Image from "next/image";
+import { FaGlobe } from "react-icons/fa";
 import { HOME_ROUTE } from "@/constants/routes";
+import PostPopup from "../Popup/PostPopup";
 const Header = () => {
+  const [post, setPost] = useState(false);
   return (
     <div>
       <div className="h-[50px] relative"></div>
@@ -18,7 +21,10 @@ const Header = () => {
               <ul className="flex items-center">
                 <li className="mx-4">
                   <div className="logo">
-                    <Link href={HOME_ROUTE} className="text-lg font-bold text-black">
+                    <Link
+                      href={HOME_ROUTE}
+                      className="text-lg font-bold text-black"
+                    >
                       Hackintown
                     </Link>
                   </div>
@@ -76,19 +82,38 @@ const Header = () => {
                   </div>
                 </li>
                 <li>
-                  <button className="px-4 py-2 bg-white rounded-3xl text-black border border-gray-400 text-xs">
+                  <button className="px-4 py-2 bg-white rounded-3xl text-black border border-gray-400 text-xs whitespace-nowrap">
                     Try Hackintoiwn +
                   </button>
                 </li>
-                <li>
-                  <div className="mr-2 ml-1 rounded-full">
-                    <Image
-                      src="https://pxbar.com/wp-content/uploads/2023/08/insta-dp-for-girls.jpg"
-                      height={30}
-                      width={30}
-                      alt="avatar"
-                    />
+                <li className="ml-2">
+                  <div className="hover:rounded hover:bg-gray-100">
+                    <Link href="/" className="">
+                      <div className="min-w-[40px] h-[49px] flex items-center justify-center">
+                        <Image
+                          src="https://pxbar.com/wp-content/uploads/2023/08/insta-dp-for-girls.jpg"
+                          height={30}
+                          width={30}
+                          alt="avatar"
+                        />
+                      </div>
+                    </Link>
                   </div>
+                </li>
+                <li>
+                  <div className="hover:rounded hover:bg-gray-100">
+                    <Link href="/" className="">
+                      <div className="min-w-[40px] h-[49px] flex items-center justify-center">
+                        <FaGlobe className="w-[25px] h-[25px]" />
+                      </div>
+                    </Link>
+                  </div>
+                </li>
+                <li>
+                  <button onClick={() => setPost(true)} className="px-4 py-2 bg-white rounded-3xl text-black border border-gray-400 text-xs whitespace-nowrap">
+                    Add Question
+                  </button>
+                  {post && <PostPopup setPost={setPost} />}
                 </li>
               </ul>
             </nav>

@@ -45,7 +45,7 @@ const Slidebar = () => {
   return (
     <>
       <div className="max-w-[150px] w-[100%]"></div>
-      <div className="fixed top-16 h-full max-w-[150px] w-[100%] p-1 border-b-2  border-gray-200">
+      <div className="fixed top-16 h-full max-w-[150px] w-[100%] p-1 border-b-2  border-gray-200 -z-10">
         <div className="border-b border-gray-300 h-max">
           <ul>
             {items.map((item, idx) => (

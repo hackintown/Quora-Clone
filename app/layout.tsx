@@ -23,15 +23,7 @@ export default function RootLayout({ user, children }: Props) {
   return (
     <html lang="en" className={poppins.className}>
       <body className="bg-gray-100">
-        <ReduxProvider>
-          <Header />
-          <div className="flex max-w-[1100px] mx-auto px-2 py-4">
-            <Slidebar />
-            {children}
-            <div className=""></div>
-          </div>
-          <UserLogin />
-        </ReduxProvider>
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   );

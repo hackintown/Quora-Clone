@@ -19,7 +19,7 @@ const userAuthSlice = createSlice({
   name: "userAuth",
   initialState,
   reducers: {
-    setLoginSuccess: (state, action: PayloadAction<boolean>) => {
+    setLoginSuccess: (state, action) => {
       state.isLoggedIn = action.payload;
       state.user = null;
       state.error = null;

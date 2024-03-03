@@ -5,22 +5,61 @@ import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import userAuthSlice, {setLoginSuccess, setLoginFailure, setLogout} from "@/features/userAuthSlice";
-import { ReducerState } from "next/dist/client/components/router-reducer/router-reducer-types";
-const UserLogin:React.FC = () => {
+import userAuthSlice, {
+  setLoginSuccess,
+  setLoginFailure,
+  setLogout,
+} from "@/features/userAuthSlice";
+import { useAppDispatch, useAppSelector } from "@/app/store/AuthWrapper";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  sendEmailVerification,
+} from "firebase/auth";
+import { auth, googleProvider } from "@/app/firebase";
+import { CiLineHeight } from "react-icons/ci";
+const UserLogin: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
- const dispatch = useDispatch();
- const loginSuccess = useSelector((state) => state.userAuth.isLoggedIn);
+  const dispatch = useAppDispatch();
+  const loginSuccess = useAppSelector((state) => state.userAuth.isLoggedIn);
+  const loginFailure = useAppSelector((state) => state.userAuth.isLoggedIn);
 
-  const handleLogin = (e:React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if(email && password){
-      
+  type emailType = {
+    handleLogin: any;
+  };
+  const handleLogin = async (pros: emailType) => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      onAuthStateChanged(auth, (user:any) =>{
+        sendEmailVerification(user)
+      })
+    } catch (err) {
+      console.error();
+    }
+
+    // if (email && password) {
+    //   dispatch(setLoginSuccess(true));
+    //   alert(setLoginSuccess);
+    //   localStorage.setItem("isLoggedIn", "true");
+    // } else {
+    //   dispatch(setLoginFailure(true));
+    // }
+  };
+
+  const googleSignUp = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      dispatch(setLoginSuccess(true));
+    } catch (err) {
+      console.error();
     }
   };
   return (
-    <form className={styles.form}>
+    <div className={styles.form}>
       <div className={styles["flex-column"]}>
         <label>Email</label>
       </div>
@@ -113,7 +152,7 @@ const UserLogin:React.FC = () => {
           Facbook
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 
