@@ -28,34 +28,14 @@ const UserLogin: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const loginSuccess = useAppSelector((state) => state.userAuth.isLoggedIn);
   const loginFailure = useAppSelector((state) => state.userAuth.isLoggedIn);
 
-  type emailType = {
-    handleLogin: any;
-  };
-  const handleLogin = async (pros: emailType) => {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      onAuthStateChanged(auth, (user:any) =>{
-        sendEmailVerification(user)
-      })
-    } catch (err) {
-      console.error();
-    }
-
-    // if (email && password) {
-    //   dispatch(setLoginSuccess(true));
-    //   alert(setLoginSuccess);
-    //   localStorage.setItem("isLoggedIn", "true");
-    // } else {
-    //   dispatch(setLoginFailure(true));
-    // }
-  };
+  const handleLogin = async () => {};
 
   const googleSignUp = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
       dispatch(setLoginSuccess(true));
     } catch (err) {
-      console.error();
+      console.error(err);
     }
   };
   return (

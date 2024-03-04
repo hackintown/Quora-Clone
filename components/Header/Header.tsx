@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <div>
       <div className="h-[50px] relative"></div>
-      <header className="px-4 bg-white shadow-md py-1 fixed top-0 w-full min-h-[50px]">
+      <header className="px-4 bg-white shadow-md py-1 fixed top-0 w-full min-h-[50px] z-50">
         <div className="max-w-[1100px] mx-auto">
           <div className="flex items-center">
             <nav>
