@@ -21,19 +21,22 @@ import {
 } from "firebase/auth";
 import { auth, googleProvider } from "@/app/firebase";
 import { CiLineHeight } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 const UserLogin: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useAppDispatch();
   const loginSuccess = useAppSelector((state) => state.userAuth.isLoggedIn);
   const loginFailure = useAppSelector((state) => state.userAuth.isLoggedIn);
-
+  const router = useRouter();
   const handleLogin = async () => {};
 
   const googleSignUp = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
       dispatch(setLoginSuccess(true));
+      auth.currentUser !== null && router.push("/");
     } catch (err) {
       console.error(err);
     }

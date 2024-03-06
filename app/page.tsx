@@ -1,7 +1,7 @@
 "use client";
 import BlogContent from "@/components/Content/BlogContent";
 import Header from "@/components/Header/Header";
-import Leftbar from '../components/Leftbar/Leftbar';
+import Leftbar from "../components/Leftbar/Leftbar";
 import UserLogin from "@/components/Auth/UserLogin";
 import { useAppSelector } from "./store/AuthWrapper";
 import DefaultTopHeader from "../components/ContentHeader/DefaultTopHeader";
@@ -15,18 +15,12 @@ export default function Home() {
         <>
           <Header />
           <div className="flex max-w-[1100px] mx-auto px-2 py-4">
-            <Leftbar/>
+            <Leftbar />
             <div className="max-w-[600px] w-full px-3 py-1 mx-2">
               <DefaultTopHeader />
               <BlogContent />
-              <BlogContent />
-              <BlogContent />
-              <BlogContent />
-              <BlogContent />
-              <BlogContent />
-              <BlogContent />
             </div>
-            <Rightbar/>
+            <Rightbar />
           </div>
         </>
       ) : (

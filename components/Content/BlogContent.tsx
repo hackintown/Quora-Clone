@@ -42,13 +42,12 @@ const BlogContent = () => {
   useEffect(() => {
     getQuestion();
   }, []);
-
-  console.log(questionRef);
   return (
     <section className="w-[100%] my-2 bg-white shadow-[rgba(0,0,0,0.04)] shadow-sm border rounded text-sm">
       <div className="flex items-center pl-3">
         <div className="mr-2">
-          <Link href="/" className="mx-2 rounded-full">
+          <Link href="/" className="rounded-full inline-block">
+        
             <Avatar alt="Remy Sharp" src="dp.webp" />
           </Link>
         </div>
@@ -75,12 +74,12 @@ const BlogContent = () => {
         </div>
       </div>
       <div className="pl-3">
-        <h2 className="font-semibold text-base my-1">
-          Question will appear here
-        </h2>
-        <p className="font-normal text-sm mt-1 mb-2 pl-1">
-          Answer will appear here
-        </p>
+        {questionData.map((data: any) => (
+          <div key={data.id} className="">
+            <h2 className="font-semibold text-base my-1">{data?.question}</h2>
+          </div>
+        ))}
+        <p className="font-normal text-sm mt-1 mb-2">Answer will appear here</p>
       </div>
       <div>
         <Image
