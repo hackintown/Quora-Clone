@@ -9,52 +9,68 @@ import { FaRegComment } from "react-icons/fa6";
 import { GrPowerCycle } from "react-icons/gr";
 import { useState } from "react";
 import { Avatar } from "@mui/material";
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "@/app/firebase";
 import { getAuth } from "firebase/auth";
 
-const BlogContent = () => {
+interface BlogContentProps {
+  question: any;
+}
+const BlogContent: React.FC<BlogContentProps> = ({ question }) => {
   const [upArrow, setUpArrow] = useState(false);
   const [downArrow, setDownArrow] = useState(false);
+  const [questionData, setQuestionData] = useState<any[]>([]);
+  const [userName, setUserName] = useState<any>();
+  const [commentToggle, setCommentToggle] = useState<boolean>(false);
+  const [commentCount, setCommentCount] = useState("0");
+
+  const questionRef = collection(db, "questions");
+
+  useEffect(() => {
+    // Fetch username from Firestore using email ID
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+      setUserName(user.email);
+    }
+
+    const unsubscribe = onSnapshot(questionRef, (snapshot) => {
+      const updatedData = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setQuestionData(updatedData);
+    });
+
+    return () => unsubscribe();
+  }, []); // Empty dependency array to run the effect only once
+
   const handleUpArrow = () => {
     setUpArrow(!upArrow);
     setDownArrow(false);
   };
+
   const handleDownArrow = () => {
     setDownArrow(!downArrow);
     setUpArrow(false);
   };
-  const questionRef = collection(db, "questions");
-  const [questionData, getQuestionData] = useState<any>([]);
-
-  const getQuestion = async () => {
-    try {
-      const data = await getDocs(questionRef);
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      getQuestionData(filteredData);
-    } catch (err) {
-      console.error(err);
-    }
+  const handleAddComment = () => {
+    setCommentToggle(!commentToggle);
   };
-  useEffect(() => {
-    getQuestion();
-  }, []);
   return (
     <section className="w-[100%] my-2 bg-white shadow-[rgba(0,0,0,0.04)] shadow-sm border rounded text-sm">
       <div className="flex items-center pl-3">
         <div className="mr-2">
           <Link href="/" className="rounded-full inline-block">
-        
-            <Avatar alt="Remy Sharp" src="dp.webp" />
+            <Avatar alt="Remy Sharp">
+              {userName && userName.charAt(0).toUpperCase()}
+            </Avatar>
           </Link>
         </div>
         <div className="flex flex-col">
           <div className="flex items-center">
             <Link href="/" className="text-sm font-semibold hover:underline">
-              Business Trading
+              {userName}
             </Link>
             <span className="text-sm text-blue-700 hover:underline font-thin ml-2">
               Follow
@@ -62,7 +78,10 @@ const BlogContent = () => {
           </div>
           <div className="flex items-center">
             <span className="text-xs text-gray-800 cursor-pointer">
-              Answer by Amit Singh
+              Answer by{" "}
+              {userName &&
+                userName.slice(0, 5).toLowerCase().charAt(0).toUpperCase() +
+                  userName.slice(1, 5).toLowerCase()}
             </span>
             <div className="mx-2 text-xs text-gray-800">
               <MdAdminPanelSettings className="text-base" />
@@ -131,7 +150,10 @@ const BlogContent = () => {
           </div>
         </div>
         <div className="mx-2 hover:bg-[rgba(0,0,1,0.03)] rounded-full px-2 py-1">
-          <button className="flex items-center">
+          <button
+            className="flex items-center"
+            onClick={() => setCommentToggle(!commentToggle)}
+          >
             <FaRegComment />
             <span className="inline-block pl-2">45</span>
           </button>
@@ -143,6 +165,30 @@ const BlogContent = () => {
           </button>
         </div>
       </div>
+      {commentToggle && (
+        <div className="flex items-center my-2 mx-2">
+          <div className="mr-2">
+            <Link href="/" className="rounded-full inline-block">
+              <Avatar alt="Remy Sharp">
+                {userName && userName.charAt(0).toUpperCase()}
+              </Avatar>
+            </Link>
+          </div>
+          <div className="top-input-wrap px-2 py-2 bg-[#f7f7f8] border-slate-200  border rounded-[20px] w-full">
+            <input
+              className="w-full bg-transparent text-sm"
+              placeholder="Add a comment"
+            />
+          </div>
+          <button
+            onClick={handleAddComment}
+            type="button"
+            className="py-2 whitespace-nowrap text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-5 mx-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            Add comment
+          </button>
+        </div>
+      )}
     </section>
   );
 };

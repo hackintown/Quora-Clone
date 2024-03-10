@@ -2,6 +2,8 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/components/ReduxProvider/Provider";
+import theme from "@/theme/theme";
+import { ThemeProvider } from "@mui/material";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "700"],
@@ -18,7 +20,9 @@ export default function RootLayout({ user, children }: Props) {
   return (
     <html lang="en" className={poppins.className}>
       <body className="bg-gray-100">
-        <ReduxProvider>{children}</ReduxProvider>
+        <ThemeProvider theme={theme}>
+          <ReduxProvider>{children}</ReduxProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

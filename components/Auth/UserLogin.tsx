@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./UserLogin.module.css";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
@@ -30,6 +30,18 @@ const UserLogin: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const loginSuccess = useAppSelector((state) => state.userAuth.isLoggedIn);
   const loginFailure = useAppSelector((state) => state.userAuth.isLoggedIn);
   const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in, redirect to home page
+        dispatch(setLoginSuccess(true));
+        router.push("/");
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
   const handleLogin = async () => {};
 
   const googleSignUp = async () => {

@@ -1,13 +1,20 @@
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/app/firebase";
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import { Avatar, useTheme } from "@mui/material";
+import { getAuth } from "firebase/auth";
 type postType = {
   setPost: any;
 };
 const PostPopup = (props: postType) => {
   const questionRef = collection(db, "questions");
   const [quest, setQuest] = useState("");
+  const [value, setValue] = React.useState("1");
   const addQuestion = () => {
     if (quest.trim() === "") {
       alert("Bhai Kuh Dal Input Me Tabhi Aage jaunga?");
@@ -16,6 +23,9 @@ const PostPopup = (props: postType) => {
       question: quest,
     });
     props?.setPost(false);
+  };
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
   };
   return (
     <div
@@ -39,12 +49,35 @@ const PostPopup = (props: postType) => {
                     X
                   </button>
                 </div>
-                <input
-                  value={quest}
-                  onChange={(e) => setQuest(e.target.value)}
-                  placeholder="Start your question with 'What', 'How', 'Why', etc"
-                  className="border-b border-gray-400 w-full mb-5"
-                />
+                <div className="w-full">
+                  <Box sx={{ width: "100%", typography: "body1" }}>
+                    <TabContext value={value}>
+                      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                        <TabList
+                          onChange={handleChange}
+                          aria-label="lab API tabs example"
+                        >
+                          <Tab label="Add Question" value="1" />
+                          <Tab label="Create Post" value="2" />
+                        </TabList>
+                      </Box>
+                      <TabPanel value="1">
+                        <div className="mb-3">
+                          <Avatar alt="Remy Sharp">
+                            {/* {userName && userName.charAt(0).toUpperCase()} */}
+                          </Avatar>
+                        </div>
+                        <input
+                          value={quest}
+                          onChange={(e) => setQuest(e.target.value)}
+                          placeholder="Start your question with 'What', 'How', 'Why', etc"
+                          className="border-b border-gray-400 w-full mb-5"
+                        />
+                      </TabPanel>
+                      <TabPanel value="2">Item Two</TabPanel>
+                    </TabContext>
+                  </Box>
+                </div>
                 <button
                   type="button"
                   onClick={addQuestion}
